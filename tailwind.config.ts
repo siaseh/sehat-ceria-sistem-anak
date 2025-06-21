@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -25,12 +26,28 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					DEFAULT: '#FF6B6B',
+					foreground: '#FFFFFF'
 				},
 				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
+					DEFAULT: '#4ECDC4',
+					foreground: '#FFFFFF'
+				},
+				success: {
+					DEFAULT: '#45B7D1',
+					foreground: '#FFFFFF'
+				},
+				warning: {
+					DEFAULT: '#FFA726',
+					foreground: '#FFFFFF'
+				},
+				kid: {
+					pink: '#FFB3E6',
+					blue: '#87CEEB',
+					green: '#98FB98',
+					yellow: '#FFEB3B',
+					orange: '#FFB347',
+					purple: '#DDA0DD'
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
@@ -63,32 +80,44 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				}
 			},
+			fontFamily: {
+				'comic': ['Comic Sans MS', 'cursive'],
+				'kid': ['Fredoka', 'Comic Sans MS', 'cursive']
+			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			keyframes: {
-				'accordion-down': {
-					from: {
-						height: '0'
+				'bounce-slow': {
+					'0%, 100%': {
+						transform: 'translateY(-5%)',
+						'animation-timing-function': 'cubic-bezier(0.8, 0, 1, 1)'
 					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
+					'50%': {
+						transform: 'translateY(0)',
+						'animation-timing-function': 'cubic-bezier(0, 0, 0.2, 1)'
 					}
 				},
-				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
+				'wiggle': {
+					'0%, 100%': { transform: 'rotate(-3deg)' },
+					'50%': { transform: 'rotate(3deg)' }
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0px)' },
+					'50%': { transform: 'translateY(-10px)' }
+				},
+				'pulse-glow': {
+					'0%, 100%': { boxShadow: '0 0 5px rgba(255, 107, 107, 0.5)' },
+					'50%': { boxShadow: '0 0 20px rgba(255, 107, 107, 0.8), 0 0 30px rgba(255, 107, 107, 0.6)' }
 				}
 			},
 			animation: {
-				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'bounce-slow': 'bounce-slow 3s infinite',
+				'wiggle': 'wiggle 1s ease-in-out infinite',
+				'float': 'float 3s ease-in-out infinite',
+				'pulse-glow': 'pulse-glow 2s ease-in-out infinite'
 			}
 		}
 	},
