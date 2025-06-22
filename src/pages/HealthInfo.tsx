@@ -128,7 +128,7 @@ const HealthInfo = () => {
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-lg">{edu.title}</CardTitle>
                         <Badge className="bg-white/20 text-white">
-                          {edu.age}
+                          {edu.ageGroup}
                         </Badge>
                       </div>
                     </CardHeader>
