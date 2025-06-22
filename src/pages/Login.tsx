@@ -7,72 +7,43 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
-import { useAuth } from '@/contexts/AuthContext';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: '',
     role: ''
   });
-  const [isLogin, setIsLogin] = useState(true);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { signIn, signUp } = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.email || !formData.password || (!isLogin && !formData.role)) {
+    if (!formData.username || !formData.password || !formData.role) {
       toast.error('Mohon lengkapi semua data!');
       return;
     }
 
-    setLoading(true);
-
-    try {
-      if (isLogin) {
-        const { error } = await signIn(formData.email, formData.password);
-        if (error) {
-          toast.error(error.message || 'Login gagal');
-          return;
-        }
-        toast.success('Login berhasil! 🎉');
-      } else {
-        const { error } = await signUp(formData.email, formData.password, {
-          name: formData.email.split('@')[0],
-          role: formData.role,
-        });
-        if (error) {
-          toast.error(error.message || 'Registrasi gagal');
-          return;
-        }
-        toast.success('Registrasi berhasil! Silakan cek email untuk verifikasi.');
-      }
-
-      // Redirect berdasarkan role
-      switch (formData.role) {
-        case 'student':
-          navigate('/student');
-          break;
-        case 'teacher':
-          navigate('/teacher');
-          break;
-        case 'admin':
-          navigate('/admin');
-          break;
-        case 'super_admin':
-          navigate('/super-admin');
-          break;
-        default:
-          navigate('/');
-      }
-    } catch (error) {
-      console.error('Auth error:', error);
-      toast.error('Terjadi kesalahan sistem');
-    } finally {
-      setLoading(false);
+    // Simulasi login berhasil
+    toast.success(`Selamat datang, ${formData.username}! 🎉`);
+    
+    // Redirect berdasarkan role
+    switch (formData.role) {
+      case 'student':
+        navigate('/student');
+        break;
+      case 'teacher':
+        navigate('/teacher');
+        break;
+      case 'admin':
+        navigate('/admin');
+        break;
+      case 'super-admin':
+        navigate('/super-admin');
+        break;
+      default:
+        navigate('/');
     }
   };
 
@@ -99,77 +70,72 @@ const Login = () => {
             </div>
           </Link>
           
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">
-            {isLogin ? 'Selamat Datang! 👋' : 'Daftar Akun Baru 📝'}
-          </h2>
-          <p className="text-gray-600">
-            {isLogin ? 'Masuk ke akun SIASEH untuk mulai belajar kesehatan' : 'Buat akun baru untuk bergabung dengan SIASEH'}
-          </p>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">Selamat Datang! 👋</h2>
+          <p className="text-gray-600">Masuk ke akun SIASEH untuk mulai belajar kesehatan</p>
         </div>
 
-        {/* Login/Register Form */}
+        {/* Login Form */}
         <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-2xl">
           <CardHeader className="text-center">
             <CardTitle className="text-xl font-bold text-gray-800">
-              {isLogin ? 'Masuk ke Akun' : 'Daftar Akun Baru'}
+              Masuk ke Akun
             </CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
-              {!isLogin && (
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">
-                    Daftar Sebagai
-                  </label>
-                  <Select 
-                    value={formData.role} 
-                    onValueChange={(value) => setFormData({...formData, role: value})}
-                  >
-                    <SelectTrigger className="w-full h-12 text-base">
-                      <SelectValue placeholder="Pilih peran Anda" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="student">
-                        <div className="flex items-center space-x-2">
-                          <span className="text-lg">👦</span>
-                          <span>Siswa</span>
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="teacher">
-                        <div className="flex items-center space-x-2">
-                          <span className="text-lg">👩‍🏫</span>
-                          <span>Guru</span>
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="admin">
-                        <div className="flex items-center space-x-2">
-                          <span className="text-lg">👨‍💼</span>
-                          <span>Admin Sekolah</span>
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="super_admin">
-                        <div className="flex items-center space-x-2">
-                          <span className="text-lg">👑</span>
-                          <span>Super Admin</span>
-                        </div>
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
-
-              {/* Email */}
+              {/* Role Selection */}
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">
-                  Email
+                  Masuk Sebagai
+                </label>
+                <Select 
+                  value={formData.role} 
+                  onValueChange={(value) => setFormData({...formData, role: value})}
+                >
+                  <SelectTrigger className="w-full h-12 text-base">
+                    <SelectValue placeholder="Pilih peran Anda" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="student">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-lg">👦</span>
+                        <span>Siswa</span>
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="teacher">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-lg">👩‍🏫</span>
+                        <span>Guru</span>
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="admin">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-lg">👨‍💼</span>
+                        <span>Admin Sekolah</span>
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="super-admin">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-lg">👑</span>
+                        <span>Super Admin</span>
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Username */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">
+                  Nama Pengguna
                 </label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                   <Input
-                    type="email"
-                    placeholder="Masukkan email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    type="text"
+                    placeholder="Masukkan nama pengguna"
+                    value={formData.username}
+                    onChange={(e) => setFormData({...formData, username: e.target.value})}
                     className="pl-10 h-12 text-base"
                   />
                 </div>
@@ -202,47 +168,34 @@ const Login = () => {
               {/* Submit Button */}
               <Button 
                 type="submit" 
-                disabled={loading}
                 className="w-full h-12 text-base font-semibold bg-primary hover:bg-primary/90 text-white rounded-xl"
               >
-                {loading ? 'Memproses...' : (isLogin ? 'Masuk ke SIASEH 🚀' : 'Daftar ke SIASEH 🎉')}
+                Masuk ke SIASEH 🚀
               </Button>
             </form>
 
-            {/* Toggle Login/Register */}
-            <div className="text-center mt-6">
-              <button
-                onClick={() => setIsLogin(!isLogin)}
-                className="text-primary hover:text-primary/80 font-medium transition-colors"
-              >
-                {isLogin ? 'Belum punya akun? Daftar di sini' : 'Sudah punya akun? Masuk di sini'}
-              </button>
-            </div>
-
             {/* Demo Accounts */}
-            {isLogin && (
-              <div className="mt-6 p-4 bg-gray-50 rounded-xl">
-                <h3 className="text-sm font-semibold text-gray-700 mb-2">Akun Demo:</h3>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="bg-white p-2 rounded">
-                    <p className="font-medium">Siswa</p>
-                    <p>student@demo.com / password</p>
-                  </div>
-                  <div className="bg-white p-2 rounded">
-                    <p className="font-medium">Guru</p>
-                    <p>teacher@demo.com / password</p>
-                  </div>
-                  <div className="bg-white p-2 rounded">
-                    <p className="font-medium">Admin</p>
-                    <p>admin@demo.com / password</p>
-                  </div>
-                  <div className="bg-white p-2 rounded">
-                    <p className="font-medium">Super Admin</p>
-                    <p>super@demo.com / password</p>
-                  </div>
+            <div className="mt-6 p-4 bg-gray-50 rounded-xl">
+              <h3 className="text-sm font-semibold text-gray-700 mb-2">Akun Demo:</h3>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="bg-white p-2 rounded">
+                  <p className="font-medium">Siswa</p>
+                  <p>siswa123 / password</p>
+                </div>
+                <div className="bg-white p-2 rounded">
+                  <p className="font-medium">Guru</p>
+                  <p>guru123 / password</p>
+                </div>
+                <div className="bg-white p-2 rounded">
+                  <p className="font-medium">Admin</p>
+                  <p>admin123 / password</p>
+                </div>
+                <div className="bg-white p-2 rounded">
+                  <p className="font-medium">Super Admin</p>
+                  <p>super123 / password</p>
                 </div>
               </div>
-            )}
+            </div>
           </CardContent>
         </Card>
 

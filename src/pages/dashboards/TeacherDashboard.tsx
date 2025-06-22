@@ -5,9 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import DashboardLayout from '@/components/layout/DashboardLayout';
-import StudentList from '@/components/teacher/StudentList';
-import HealthReportsList from '@/components/teacher/HealthReportsList';
-import ComplaintsList from '@/components/teacher/ComplaintsList';
 
 const TeacherDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -112,22 +109,13 @@ const TeacherDashboard = () => {
           </div>
         );
 
-      case 'students':
-        return <StudentList />;
-      case 'health-reports':
-        return <HealthReportsList />;
-      case 'complaints':
-        return <ComplaintsList />;
-      case 'reports':
+      default:
         return (
           <div className="text-center py-12">
-            <FileText className="mx-auto text-gray-400 mb-4" size={48} />
-            <h3 className="text-xl font-semibold mb-2">Fitur Cetak Laporan</h3>
+            <h3 className="text-xl font-semibold mb-2">Fitur Sedang Dikembangkan</h3>
             <p className="text-gray-600">Fitur ini akan segera tersedia!</p>
           </div>
         );
-      default:
-        return null;
     }
   };
 

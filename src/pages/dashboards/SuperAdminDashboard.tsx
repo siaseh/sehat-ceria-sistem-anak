@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Building2, Users, Shield, Settings, BarChart3, Database } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import DashboardLayout from '@/components/layout/DashboardLayout';
-import ContentManager from '@/components/admin/ContentManager';
 
 const SuperAdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -20,7 +19,6 @@ const SuperAdminDashboard = () => {
     { id: 'overview', label: 'Beranda', icon: BarChart3 },
     { id: 'schools', label: 'Kelola Sekolah', icon: Building2 },
     { id: 'admins', label: 'Kelola Admin', icon: Shield },
-    { id: 'content', label: 'Kelola Konten', icon: Settings },
     { id: 'system', label: 'Sistem', icon: Database },
     { id: 'settings', label: 'Pengaturan', icon: Settings }
   ];
@@ -107,9 +105,6 @@ const SuperAdminDashboard = () => {
           </div>
         );
 
-      case 'content':
-        return <ContentManager />;
-      
       default:
         return (
           <div className="text-center py-12">
