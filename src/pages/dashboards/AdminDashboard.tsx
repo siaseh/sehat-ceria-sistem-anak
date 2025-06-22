@@ -3,6 +3,10 @@ import { useState } from 'react';
 import { Users, School, FileText, Settings, BarChart3, Shield } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import DashboardLayout from '@/components/layout/DashboardLayout';
+import StudentList from '@/components/teacher/StudentList';
+import HealthReportsList from '@/components/teacher/HealthReportsList';
+import ComplaintsList from '@/components/teacher/ComplaintsList';
+import ContentManager from '@/components/admin/ContentManager';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -18,9 +22,10 @@ const AdminDashboard = () => {
 
   const menuItems = [
     { id: 'overview', label: 'Beranda', icon: BarChart3 },
-    { id: 'teachers', label: 'Kelola Guru', icon: Users },
-    { id: 'students', label: 'Kelola Siswa', icon: School },
-    { id: 'reports', label: 'Laporan', icon: FileText },
+    { id: 'students', label: 'Data Siswa', icon: Users },
+    { id: 'health-reports', label: 'Laporan Kesehatan', icon: FileText },
+    { id: 'complaints', label: 'Keluhan Siswa', icon: Shield },
+    { id: 'content', label: 'Kelola Konten', icon: Settings },
     { id: 'settings', label: 'Pengaturan', icon: Settings }
   ];
 
@@ -106,6 +111,22 @@ const AdminDashboard = () => {
           </div>
         );
 
+      case 'students':
+        return <StudentList />;
+      case 'health-reports':
+        return <HealthReportsList />;
+      case 'complaints':
+        return <ComplaintsList />;
+      case 'content':
+        return <ContentManager />;
+      case 'settings':
+        return (
+          <div className="text-center py-12">
+            <Settings className="mx-auto text-gray-400 mb-4" size={48} />
+            <h3 className="text-xl font-semibold mb-2">Pengaturan Sistem</h3>
+            <p className="text-gray-600">Fitur ini akan segera tersedia!</p>
+          </div>
+        );
       default:
         return (
           <div className="text-center py-12">
