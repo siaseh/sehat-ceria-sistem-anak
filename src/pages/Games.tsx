@@ -111,7 +111,7 @@ const Games = () => {
             <Card className="bg-gradient-to-r from-kid-green to-green-400 text-white border-0">
               <CardContent className="p-6 text-center">
                 <div className="text-3xl font-bold mb-2">6</div>
-                <p className="text-white/90">Game Ters edia</p>
+                <p className="text-white/90">Game Tersedia</p>
               </CardContent>
             </Card>
             <Card className="bg-gradient-to-r from-kid-blue to-blue-400 text-white border-0">
